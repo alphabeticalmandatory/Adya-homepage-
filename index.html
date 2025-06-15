@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ādyā Stotram</title>
-  <!-- Swiper JS CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <!-- Glide.js CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/@glidejs/glide/dist/css/glide.core.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/@glidejs/glide/dist/css/glide.theme.min.css">
   <style>
     * {
       box-sizing: border-box;
@@ -20,12 +21,14 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      overflow-x: hidden;
     }
     
     .header {
       width: 100%;
       padding: 20px;
       text-align: center;
+      position: relative;
     }
     
     .image-container {
@@ -34,12 +37,16 @@
       padding: 0;
       margin: 0 auto;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     
     .image-container img {
       width: 100%;
+      max-width: 600px;
       height: auto;
-      max-height: 60vh;
+      max-height: 50vh;
       object-fit: contain;
       border-radius: 16px;
       border: 3px solid #ffd700;
@@ -58,9 +65,10 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      width: 100%;
     }
     
-    .swiper-container {
+    .glide {
       width: 100%;
       height: auto;
       min-height: 40vh;
@@ -70,29 +78,50 @@
       padding: 20px 0;
     }
     
-    .swiper-slide {
+    .glide__track {
+      height: 100%;
+    }
+    
+    .glide__slides {
+      display: flex;
+      align-items: stretch;
+      height: 100%;
+    }
+    
+    .glide__slide {
       background: rgba(0, 0, 0, 0.7);
       border: 1px solid #ffd700;
       border-radius: 10px;
       padding: 25px;
       margin: 0 20px;
       box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: center;
+      height: auto;
+      min-height: 100%;
+      overflow-y: auto;
+      flex-shrink: 0;
     }
     
     .sanskrit {
       color: #ffd700;
       font-size: 1.5rem;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       font-weight: bold;
       line-height: 1.6;
+      white-space: pre-wrap;
     }
     
     .translit {
       color: #eee;
       font-size: 1.2rem;
       font-style: italic;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       line-height: 1.5;
+      white-space: pre-wrap;
     }
     
     .meaning {
@@ -100,6 +129,7 @@
       font-size: 1.1rem;
       margin-bottom: 10px;
       line-height: 1.7;
+      white-space: pre-wrap;
     }
     
     .slide-counter {
@@ -107,22 +137,29 @@
       color: #aaa;
       font-size: 1rem;
       margin-top: 15px;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      border-top: 1px solid #ffd700;
     }
     
-    .swiper-pagination {
+    .glide__bullets {
       position: relative;
       margin-top: 15px;
+      text-align: center;
     }
     
-    .swiper-pagination-bullet {
+    .glide__bullet {
       background: #555;
       opacity: 1;
       width: 12px;
       height: 12px;
-      margin: 0 8px !important;
+      margin: 0 8px;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
     }
     
-    .swiper-pagination-bullet-active {
+    .glide__bullet--active {
       background: #ffd700;
     }
     
@@ -139,9 +176,13 @@
         font-size: 1rem;
       }
       
-      .swiper-slide {
+      .glide__slide {
         padding: 20px 15px;
         margin: 0 10px;
+      }
+      
+      .image-container img {
+        max-height: 40vh;
       }
     }
     
@@ -161,30 +202,36 @@
       .meaning {
         font-size: 0.9rem;
       }
+      
+      .image-container img {
+        max-height: 30vh;
+      }
     }
   </style>
 </head>
 <body>
   <div class="header">
     <div class="image-container">
-      <img src="https://i.ibb.co/ymQ8RC0D/Screenshot-2024-09-17-18-55-25-571-com-google-android-youtube-1.jpg" alt="Adya Stotram">
+      <img src="https://i.ibb.co/ymQ8RC0/Screenshot-2024-09-17-18-55-25-571-com-google-android-youtube-1.jpg" alt="Adya Stotram">
     </div>
     <div class="mantra-caption">ॐ नमः आद्यायै ।</div>
   </div>
 
   <div class="content-container">
-    <!-- Swiper container -->
-    <div class="swiper-container">
-      <div class="swiper-wrapper" id="slideWrapper"></div>
+    <!-- Glide container -->
+    <div class="glide">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides" id="slideWrapper"></ul>
+      </div>
       <!-- Pagination -->
-      <div class="swiper-pagination"></div>
+      <div class="glide__bullets" data-glide-el="controls[nav]"></div>
       <!-- Slide counter -->
       <div class="slide-counter" id="slideCounter"></div>
     </div>
   </div>
 
-  <!-- Swiper JS -->
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <!-- Glide.js -->
+  <script src="https://unpkg.com/@glidejs/glide/dist/glide.min.js"></script>
   <script>
     const slides = [
       {
@@ -294,8 +341,9 @@
 
     // Create slides
     slides.forEach((slide, index) => {
-      const slideElement = document.createElement('div');
-      slideElement.className = 'swiper-slide';
+      const slideElement = document.createElement('li');
+      slideElement.className = 'glide__slide';
+      slideElement.setAttribute('data-glide-dir', index);
       slideElement.innerHTML = `
         <div class="sanskrit">${slide.sanskrit}</div>
         <div class="translit">${slide.translit}</div>
@@ -304,35 +352,26 @@
       slideWrapper.appendChild(slideElement);
     });
 
-    // Initialize Swiper
-    const swiper = new Swiper('.swiper-container', {
-      direction: 'horizontal',
-      loop: false,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      keyboard: {
-        enabled: true,
-      },
-      autoplay: {
-        delay: 14000, // 14 seconds per slide
-        disableOnInteraction: false,
-      },
-      on: {
-        slideChange: function() {
-          updateCounter();
-        },
-      }
+    // Initialize Glide
+    const glide = new Glide('.glide', {
+      type: 'carousel',
+      startAt: 0,
+      perView: 1,
+      focusAt: 'center',
+      gap: 20,
+      keyboard: true
     });
 
-    // Update slide counter
-    function updateCounter() {
-      slideCounter.textContent = `${swiper.realIndex + 1}/${slides.length}`;
-    }
+    // Update slide counter on slide change
+    glide.on('move.after', () => {
+      slideCounter.textContent = `${glide.index + 1}/${slides.length}`;
+    });
 
     // Initial counter update
-    updateCounter();
+    slideCounter.textContent = `1/${slides.length}`;
+
+    // Mount Glide
+    glide.mount();
   </script>
 </body>
 </html>
