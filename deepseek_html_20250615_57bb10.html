@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="sa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ādyā Stotram</title>
+  <!-- Swiper JS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Georgia', serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    .header {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .image-container {
+      width: 100%;
+      max-width: 100vw;
+      padding: 0;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    
+    .image-container img {
+      width: 100%;
+      height: auto;
+      max-height: 60vh;
+      object-fit: contain;
+      border-radius: 16px;
+      border: 3px solid #ffd700;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    
+    .mantra-caption {
+      font-size: 2.5rem;
+      color: #ffd700;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+      margin: 20px 0;
+    }
+    
+    .content-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .swiper-container {
+      width: 100%;
+      height: auto;
+      min-height: 40vh;
+      margin-top: auto;
+      background: rgba(0, 0, 0, 0.8);
+      border-top: 2px solid #ffd700;
+      padding: 20px 0;
+    }
+    
+    .swiper-slide {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #ffd700;
+      border-radius: 10px;
+      padding: 25px;
+      margin: 0 20px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+    
+    .sanskrit {
+      color: #ffd700;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+    
+    .translit {
+      color: #eee;
+      font-size: 1.2rem;
+      font-style: italic;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+    
+    .meaning {
+      color: #ccc;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+    
+    .slide-counter {
+      text-align: center;
+      color: #aaa;
+      font-size: 1rem;
+      margin-top: 15px;
+    }
+    
+    .swiper-pagination {
+      position: relative;
+      margin-top: 15px;
+    }
+    
+    .swiper-pagination-bullet {
+      background: #555;
+      opacity: 1;
+      width: 12px;
+      height: 12px;
+      margin: 0 8px !important;
+    }
+    
+    .swiper-pagination-bullet-active {
+      background: #ffd700;
+    }
+    
+    @media (max-width: 768px) {
+      .mantra-caption {
+        font-size: 2rem;
+      }
+      
+      .sanskrit {
+        font-size: 1.3rem;
+      }
+      
+      .translit, .meaning {
+        font-size: 1rem;
+      }
+      
+      .swiper-slide {
+        padding: 20px 15px;
+        margin: 0 10px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .mantra-caption {
+        font-size: 1.8rem;
+      }
+      
+      .sanskrit {
+        font-size: 1.2rem;
+      }
+      
+      .translit {
+        font-size: 0.95rem;
+      }
+      
+      .meaning {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="image-container">
+      <img src="https://i.ibb.co/ymQ8RC0D/Screenshot-2024-09-17-18-55-25-571-com-google-android-youtube-1.jpg" alt="Adya Stotram">
+    </div>
+    <div class="mantra-caption">ॐ नमः आद्यायै ।</div>
+  </div>
+
+  <div class="content-container">
+    <!-- Swiper container -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper" id="slideWrapper"></div>
+      <!-- Pagination -->
+      <div class="swiper-pagination"></div>
+      <!-- Slide counter -->
+      <div class="slide-counter" id="slideCounter"></div>
+    </div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    const slides = [
+      {
+        sanskrit: "शृणु वत्स प्रवक्ष्यामि आद्या स्तोत्रं महाफलम् ।\nयः पठेत् सततं भक्त्या स स्व विष्णुवल्लभः ॥१॥",
+        translit: "Shṛṇu vatsa pravakṣyāmi ādyā stotraṁ mahāphalam |\nYaḥ paṭhet satataṁ bhaktyā sa sva viṣṇuvallabhaḥ ||1||",
+        meaning: "1.1: Om, Reverential Salutations to Adya Maa,\n1.2: Listen, O Child, I recite the Adya Stotram which is the bestower of great Fruits,\n1.3: He who recites this constantly (regularly) with Devotion, will indeed become dear to Vishnu."
+      },
+      {
+        sanskrit: "मृत्युर्व्याधिभयं तस्य नास्ति किञ्चित कलौ युगे ।\nअपुत्रा लभते पुत्रं त्रिपक्षं श्रवणं यदि ॥२॥",
+        translit: "Mrtyur-Vyaadhi-Bhayam Tasya Naasti Kin.cita Kalau Yuge |\nAputraa Labhate Putram Tri-Pakssam Shravannam Yadi ||2||",
+        meaning: "2.1: (Salutations to Adya Maa) (By listening to this Stotra and meditating on Adya Shakti) The Fear of Death and Disease does not exist even a little in this Kali Yuga,\n2.2: A woman without son obtains a son if she listens to this Stotra (and meditates on Adya Shakti) for three Pakshas (Lunar Fortnights) (consecutively)."
+      },
+      {
+        sanskrit: "द्वौ मासौ बन्धनान्मुक्ति विप्रवक्तात् श्रुतं यदि ।\nमृतवत्सा जीववत्सा षण्मासं श्रवणं यदि ॥३॥",
+        translit: "Dvau Maasau Bandhanaan-Mukti Vipra-Vaktaat Shrutam Yadi |\nMrtavatsaa Jiivavatsaa Ssann-Maasam Shravannam Yadi ||3||",
+        meaning: "3.1 (Salutations to Adya Maa) A person becomes free from Bondage in two months if he listens to this Stotra from a Vipra (Seer) (and meditates on Adya Shakti),\n3.2 A mother whose new-born Child always dies, becomes a child-surviving mother if she listens to this Stotra for six months (continuously)."
+      },
+      {
+        sanskrit: "नौकायां सङ्कटे युद्धे पठनाज्जयमाप्नुयात् ।\nलिखित्वा स्थापयेद्गेहे नाग्निचौरभयं क्कचित् ॥४॥",
+        translit: "Naukaayaam Sangkatte Yuddhe Patthanaaj-Jayam-Aapnuyaat |\nLikhitvaa Sthaapayed-Gehe Na-Agni-Caura-Bhayam Kkacit ||4||",
+        meaning: "4.1: (Salutations to Adya Maa) A person obtains Victory over (dangers in) Boat (i.e. during travelling in water), over difficult situations in life, and in Battle, if he recites (this Adya Stotram and meditates on Adya Shakti),\n4.2: Having written this (Adya Stotram) and establishing in one's House (with great devotion), there will no more be any fear of Fire (destroying) or Thieves (robbing)."
+      },
+      {
+        sanskrit: "राजस्थाने जयी नित्यं प्रसन्नाः सर्वदेवता ।\nॐ ह्रीं ब्रह्माणी ब्रह्मलोके च वैकुण्ठे सर्वमङ्गला ॥५॥",
+        translit: "Raaja-Sthaane Jayii Nityam Prasannaah Sarva-Devataa |\nOm Hriim Brahmaannii Brahmaloke Ca Vaikunntthe Sarvamanggalaa ||5||",
+        meaning: "5.1: (Salutations to Adya Maa) (Writing this Adya Stotram and establishing) in the place of Kings (with great devotion), makes one always Victorious and pleases all the Gods,\n5.2: Om Hrim (O Adya Devi), You are Devi Brahmani in Brahmaloka (Abode of Brahma), and (You are) Devi Sarvamangala in Vaikuntha (Abode of Vishnu)."
+      },
+      {
+        sanskrit: "इन्द्राणी अमरावत्यामंबिका वरुणालये ।\nयमालये कालरूपा कुबेरभवने शुभा ॥६॥",
+        translit: "Indraannii Amaraavatyaamambikaa Varunnaalaye |\nYamaalaye Kaalaruupaa Kuberabhavane Shubhaa ||6||",
+        meaning: "6.1: (Salutations to Adya Maa) You are Devi Indrani in Amaravati (Abode of Indra), and You are Devi Ambika in Varunalaya (Abode of Varuna),\n6.2: You are of the form of Kala (Death) in Yamalaya (Abode of Yama), and You are of the form of Devi Shubhaa (Auspiciousness) in the Abode of Kubera."
+      },
+      {
+        sanskrit: "महानन्दाग्निकोने च वायव्यां मृगवाहिनी ।\nनैऋत्यां रक्तदन्ता च ऐशाण्यां शूलधारिणी ॥७॥",
+        translit: "Mahaanandaa-[A]gnikone Ca Vaayavyaam Mrgavaahinii |\nNairtyaam Raktadantaa Ca Aishaannyaam Shuuladhaarinnii ||7||",
+        meaning: "7.1: (Salutations to Adya Maa) You are Devi Mahananda presiding over the South-East quarter, and You are Devi Mrigavahini presiding over the North-West quarter,\n7.2: You are Devi Raktadanta presiding over the South-West quarter, and You are Devi Shuladharini presiding over the North-East quarter."
+      },
+      {
+        sanskrit: "पाताले वैष्णवीरूपा सिंहले देवमोहिनी ।\nसुरसा च मणीद्विपे लङ्कायां भद्रकालिका ॥८॥",
+        translit: "Paataale Vaissnnaviiruupaa Singhale Devamohinii |\nSurasaa Ca Manniidvipe Langkaayaam Bhadrakaalikaa ||8||",
+        meaning: "8.1: (Salutations to Adya Maa) You are in the form of Devi Vaishnavi in the Patala Loka (Nether World), and You are as Devi Devamohini in Singhala (Ceylon),\n8.2: You are Devi Surasa in Manidwipa and You are Devi Bhadrakalika in Lanka."
+      },
+      {
+        sanskrit: "रामेश्वरी सेतुबन्धे विमला पुरुषोत्तमे ।\nविरजा औड्रदेशे च कामाक्ष्या नीलपर्वते ॥९॥",
+        translit: "Raameshvarii Setubandhe Vimalaa Purussottame |\nVirajaa Auddradeshe Ca Kaamaakssyaa Niilaparvate ||9||",
+        meaning: "9.1: (Salutations to Adya Maa) You are Devi Rameshwari in Setubandha (Rameshwaram) and You are Devi Vimala in Purushottama Kshetra,\n9.2: You are Devi Viraja in Auddradesha (Orissa) and You are Devi Kamakhya in Nilaparvata (Assam)."
+      },
+      {
+        sanskrit: "कालिका वङ्गदेशे च अयोध्यायां महेश्वरी ।\nवाराणस्यामन्नपूर्णा गयाक्षेत्रे गयेश्वरी ॥१०॥",
+        translit: "Kaalikaa Vanggadeshe Ca Ayodhyaayaam Maheshvarii |\nVaaraannasyaam-Annapuurnnaa Gayaakssetre Gayeshvarii ||10||",
+        meaning: "10.1: (Salutations to Adya Maa) You are Devi Kalika in Bangadesha (Bengal) and You are Devi Maheshwari in Ayodhya,\n10.2: You are Devi Annapoorna in Varanasi and You are Devi Gayeshwari in Gaya."
+      },
+      {
+        sanskrit: "कुरुक्षेत्रे भद्रकाली व्रजे कात्यायनी परा ।\nद्वारकायां महामाया मथुरायां माहेश्वरी ॥११॥",
+        translit: "Kurukssetre Bhadrakaalii Vraje Kaatyaayanii Paraa |\nDvaarakaayaam Mahaamaayaa Mathuraayaam Maaheshvarii ||11||",
+        meaning: "11.1: (Salutations to Adya Maa) You are Devi Bhadrakali in Kurukshetra, and You are the supreme Devi Katyayani in Vraja,\n11.2: You are Devi Mahamaya in Dwaraka and You are Devi Maheswari in Mathura."
+      },
+      {
+        sanskrit: "क्षुधा त्वं सर्वभूतानां वेला त्वं सागरस्य च ।\nनवमी शुक्लपक्षस्य कृष्णस्यैकादशी परा ॥१२॥",
+        translit: "Kssudhaa Tvam Sarva-Bhuutaanaam Velaa Tvam Saagarasya Ca |\nNavamii Shukla-Pakssasya Krssnnasyai[a-E]kaadashii Paraa ||12||",
+        meaning: "12.1: (Salutations to Adya Maa) You reside as Hunger in all living beings (i.e. as Prana Shakti), and You are the Shore of the Ocean (of Samsara, which is the final aim of all beings),\n12.2: You are the Navami of Shukla Paksha (Ninth day of the Bright Fortnight of the Lunar Calendar) (signifies aggressive Power), and You are the Ekadasi of Krishna Paksha (Eleventh day of the Dark Fortnight of the Lunar Calendar) (signifies Joy); You are indeed Paraa (Supreme beyond everything)."
+      },
+      {
+        sanskrit: "दक्षसा दुहिता देवी दक्षयज्ञ विनाशिनी ।\nरामस्य जानकी त्वं हि रावणध्वंसकारिणी ॥१३॥",
+        translit: "Dakssasaa Duhitaa Devii Dakssa-Yajnya Vinaashinii |\nRaamasya Jaanakii Tvam Hi Raavanna-Dhvamsa-Kaarinnii ||13||",
+        meaning: "13.1: (Salutations to Adya Maa) O Devi, You are the daughter of Daksha Who was the destroyer of the Daksha Yagya (Sacrifice of Daksha),\n13.2: You are the (beloved) Devi Janaki of Sri Rama; You indeed are the destroyer of Ravana."
+      },
+      {
+        sanskrit: "चण्डमुण्डवधे देवी रक्तबीजविनाशिनी ।\nनिशुम्भशुम्भमथिनी मधुकैटभघातिनी ॥१४॥",
+        translit: "Canndda-Munndda-Vadhe Devii Raktabiija-Vinaashinii |\nNishumbha-Shumbha-Mathinii Madhu-Kaittabha-Ghaatinii ||14||",
+        meaning: "14.1: (Salutations to Adya Maa) O Devi, You slayed (demons) Chanda and Munda, and You are the destroyer of (demon) Raktabija,\n14.2: You are the churner (i.e. killer) of (demons) Nishumbha and Shumbha, and You are the killer of (demons) Madhu and Kaitabha."
+      },
+      {
+        sanskrit: "विष्णुभक्तिप्रदा दुर्गा सुखदा मोक्षदा सदा ।\nआद्यास्तवमिमं पुण्यं यः पठेत् सततं नरः ॥१५॥",
+        translit: "Vissnnu-Bhakti-Pradaa Durgaa Sukha-Daa Mokssa-Daa Sadaa |\nAadyaa-Stavam-Imam Punnyam Yah Patthet Satatam Narah ||15||",
+        meaning: "15.1: (Salutations to Adya Maa) You are the Durga bestowing Vishnu Bhakti (Devotion to Vishnu); Your presence always bestows Happiness and (finally) Liberation,\n15.2: This Adya Stavam (Hymn of Eulogy to Adya Devi) is Auspicious; He who recites this always ..."
+      },
+      {
+        sanskrit: "सर्वज्वरभयं न स्यात् सर्वव्याधिविनाशनम् ।\nकोटितीर्थफलं तस्य लभते नात्र संशय ॥१६॥",
+        translit: "Sarva-Jvara-Bhayam Na Syaat Sarva-Vyaadhi-Vinaashanam |\nKotti-Tiirtha-Phalam Tasya Labhate Na-Atra Samshaya ||16||",
+        meaning: "16.1: ... will not have any fear of Fever (i.e. Illness) and it will destroy all his Illness,\n16.2: He will obtain the fruits of going to million pilgrimages, there is no doubt about it."
+      },
+      {
+        sanskrit: "जया मे चाग्रतः पातु विजया पातु पृष्ठतः ।\nनारायणी शीर्षदेशे सर्वाङ्गे सिंहवाहिनी ॥१७॥",
+        translit: "Jayaa Me Ca-Agratah Paatu Vijayaa Paatu Prsstthatah |\nNaaraayannii Shiirssa-Deshe Sarva-Angge Simhavaahinii ||17||",
+        meaning: "17.1: May Jaya protect me from Front, and may Vijaya protect me from Back,\n17.2: (May) Narayani (protect the) region of my Head, and may Simhavahini (protect) all my Body."
+      },
+      {
+        sanskrit: "शिवदूती उग्रचण्डा प्रत्यङ्गे परमेश्वरी ।\nविशालाक्षी महामाया कौमारी सङ्खिनी शिवा ॥१८॥",
+        translit: "Shivaduutii Ugracannddaa Pratyangge Parame[a-Ii]shvarii |\nVishaalaakssii Mahaamaayaa Kaumaarii Sangkhinii Shivaa ||18||",
+        meaning: "18.1: The Terrible and Fierce Devi Shivaduti, the Supreme Goddess, is in all my Angas (Body Parts),\n18.2: (And also) Vishalakshi the Mahamaya (Great Enchantress), and Devi Kaumari and Shankhini, the Auspicious one."
+      },
+      {
+        sanskrit: "चक्रिणी जयधात्री च रणमत्ता रणप्रिया ।\nदुर्गा जयन्ती काली च भद्रकाली महोदरी ॥१९॥",
+        translit: "Cakrinnii Jaya-Dhaatrii Ca Ranna-Mattaa Ranna-Priyaa |\nDurgaa Jayantii Kaalii Ca Bhadrakaalii Maho[a-U]darii ||19||",
+        meaning: "19.1: (And also) Chakrini (The one with Chakra), Who is the supporter of Victory (Jayadhatri), Who is intoxicated in Battle (Ranamatta) and fond of Battles (Ranapriya),\n19.2: (And) Durga, Jayanti (Ever Victorious), Kali and Bhadrakali, the one with the Huge Womb (Mahodari) (Containing the Universe within it)."
+      },
+      {
+        sanskrit: "नारसिंही च वाराही सिद्धिदात्री सुखप्रदा ।\nभयङ्करी महारौद्री महाभयविनाशिनी ॥२०॥",
+        translit: "Naarasimhii Ca Vaaraahii Siddhi-Daatrii Sukha-Pradaa |\nBhayangkarii Mahaaraudrii Mahaa-Bhaya-Vinaashinii ||20||",
+        meaning: "20.1: (And also) Narasimhi and Varahi Who bestow Siddhi (Siddhidatri) and Happiness (Sukhaprada),\n20.2: Who is the terrible Maharaudri, the destroyer of Great Fear."
+      }
+    ];
+
+    const slideWrapper = document.getElementById('slideWrapper');
+    const slideCounter = document.getElementById('slideCounter');
+
+    // Create slides
+    slides.forEach((slide, index) => {
+      const slideElement = document.createElement('div');
+      slideElement.className = 'swiper-slide';
+      slideElement.innerHTML = `
+        <div class="sanskrit">${slide.sanskrit}</div>
+        <div class="translit">${slide.translit}</div>
+        <div class="meaning">${slide.meaning}</div>
+      `;
+      slideWrapper.appendChild(slideElement);
+    });
+
+    // Initialize Swiper
+    const swiper = new Swiper('.swiper-container', {
+      direction: 'horizontal',
+      loop: false,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      keyboard: {
+        enabled: true,
+      },
+      autoplay: {
+        delay: 14000, // 14 seconds per slide
+        disableOnInteraction: false,
+      },
+      on: {
+        slideChange: function() {
+          updateCounter();
+        },
+      }
+    });
+
+    // Update slide counter
+    function updateCounter() {
+      slideCounter.textContent = `${swiper.realIndex + 1}/${slides.length}`;
+    }
+
+    // Initial counter update
+    updateCounter();
+  </script>
+</body>
+</html>
