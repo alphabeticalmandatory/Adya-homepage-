@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cosmic Dance: Brahma, Vishnu, Mahesh in Hindu Cosmology</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Tangerine:wght@700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sadashiva-color: #6a0dad;
+            --adya-color: #ff6b6b;
+            --brahma-color: #ffd700;
+            --vishnu-color: #4fc3f7;
+            --mahesh-color: #e0e0e0;
+            --galaxy-color: #7c4dff;
+            --text-color: #fff8dc;
+            --card-bg: rgba(10, 10, 30, 0.85);
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            color: var(--text-color);
+            background-color: #0a0a1a;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        .scroll-container {
+            height: 800vh;
+            position: relative;
+        }
+        
+        .scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            padding: 20px;
+            z-index: 1;
+        }
+        
+        .scene.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        .cosmic-figure {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
+        }
+        
+        #sadashiva {
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(circle at 30% 30%, var(--sadashiva-color), #000);
+            border-radius: 50%;
+            font-size: 32px;
+            box-shadow: 0 0 60px var(--sadashiva-color);
+            font-family: 'Tangerine', cursive;
+            color: #e6e6fa;
+            z-index: 10;
+        }
+        
+        #adya {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at 70% 30%, var(--adya-color), #c62828);
+            border-radius: 50%;
+            font-size: 28px;
+            box-shadow: 0 0 55px var(--adya-color);
+            font-family: 'Tangerine', cursive;
+            color: #ffebcd;
+            z-index: 10;
+        }
+        
+        .galaxy {
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle at center, var(--galaxy-color), #311b92 70%);
+            border-radius: 50%;
+            font-size: 22px;
+            box-shadow: 0 0 40px var(--galaxy-color);
+            font-family: 'Tangerine', cursive;
+            color: #e6e6fa;
+            z-index: 5;
+        }
+        
+        .galaxy::before {
+            content: '';
+            position: absolute;
+            width: 140%;
+            height: 140%;
+            background: transparent;
+            border: 1px solid rgba(124, 77, 255, 0.4);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .galaxy::after {
+            content: '';
+            position: absolute;
+            width: 180%;
+            height: 180%;
+            background: transparent;
+            border: 1px solid rgba(124, 77, 255, 0.2);
+            border-radius: 50%;
+            animation: rotate 30s linear infinite reverse;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .trinity {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        #brahma {
+            background: radial-gradient(circle at 30% 30%, var(--brahma-color), #daa520);
+            box-shadow: 0 0 20px var(--brahma-color);
+            color: #8b4513;
+        }
+        
+        #vishnu {
+            background: radial-gradient(circle at 30% 30%, var(--vishnu-color), #1565c0);
+            box-shadow: 0 0 20px var(--vishnu-color);
+            color: #0d47a1;
+        }
+        
+        #mahesh {
+            background: radial-gradient(circle at 30% 30%, var(--mahesh-color), #757575);
+            box-shadow: 0 0 20px var(--mahesh-color);
+            color: #424242;
+        }
+        
+        .text-panel {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 750px;
+            margin: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            z-index: 20;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .text-panel h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .text-panel h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            margin: 20px 0;
+            color: #ffa500;
+        }
+        
+        .text-panel p {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .info-card {
+            position: absolute;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            z-index: 15;
+        }
+        
+        .info-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: #4fc3f7;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .info-card p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .info-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .ashes {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ccc;
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(0.5px);
+        }
+        
+        .spiral {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 60%, rgba(198, 40, 40, 0.3) 100%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        .cosmic-energy {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            filter: blur(1.5px);
+            opacity: 0;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 6px;
+            background: linear-gradient(to right, var(--sadashiva-color), var(--adya-color));
+            z-index: 100;
+            width: 0;
+            box-shadow: 0 0 10px rgba(106, 13, 173, 0.7);
+        }
+        
+        .timeline {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 50;
+        }
+        
+        .timeline-marker {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-marker.active {
+            background-color: var(--vishnu-color);
+            border-color: white;
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--vishnu-color);
+        }
+        
+        .timeline-marker:hover {
+            transform: scale(1.5);
+        }
+        
+        @media (max-width: 768px) {
+            .text-panel {
+                max-width: 90%;
+                padding: 20px;
+            }
+            
+            .text-panel h1 {
+                font-size: 2.5rem;
+            }
+            
+            .text-panel h2 {
+                font-size: 2rem;
+            }
+            
+            #sadashiva, #adya {
+                width: 160px;
+                height: 160px;
+                font-size: 24px;
+            }
+            
+            .galaxy {
+                width: 100px;
+                height: 100px;
+                font-size: 18px;
+            }
+            
+            .info-card {
+                max-width: 80%;
+                padding: 15px;
+            }
+            
+            .timeline {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    
+    <div class="timeline">
+        <div class="timeline-marker" data-scene="scene1"></div>
+        <div class="timeline-marker" data-scene="scene2"></div>
+        <div class="timeline-marker" data-scene="scene3"></div>
+        <div class="timeline-marker" data-scene="scene4"></div>
+        <div class="timeline-marker" data-scene="scene5"></div>
+        <div class="timeline-marker" data-scene="scene6"></div>
+        <div class="timeline-marker" data-scene="scene7"></div>
+    </div>
+    
+    <div class="scroll-container">
+        <!-- Scene 1: Title -->
+        <div class="scene" id="scene1">
+            <div class="text-panel">
+                <h1>The Eternal Cosmic Dance</h1>
+                <p>In Hindu cosmology, the universe is an endless cycle of creation, preservation, and dissolution, with countless galaxies each containing their own divine trinity.</p>
+            </div>
+            <div class="info-card" style="top: 20%; left: 10%;" id="card1">
+                <h3>Kalpa: Cosmic Time</h3>
+                <p>A Kalpa represents a single day of Brahma, lasting 4.32 billion human years. The night of Brahma is equally long, during which the universe rests.</p>
+            </div>
+            <div id="stars-container1"></div>
+        </div>
+        
+        <!-- Scene 2: Sadashiva and Adya -->
+        <div class="scene" id="scene2">
+            <div class="cosmic-figure" id="sadashiva">Sadashiva</div>
+            <div class="cosmic-figure" id="adya">Adya Shakti</div>
+            <div class="spiral"></div>
+            <div class="text-panel">
+                <h2>The Primordial Union</h2>
+                <p>Sadashiva represents pure consciousness, while Adya Shakti is the dynamic creative energy. Their eternal dance manifests all of existence.</p>
+            </div>
+            <div class="info-card" style="bottom: 20%; right: 10%;" id="card2">
+                <h3>Sadashiva</h3>
+                <p>The eternal, formless absolute beyond time and space. The silent witness of all creation, represented by the lingam symbol.</p>
+            </div>
+            <div class="info-card" style="top: 30%; right: 15%;" id="card3">
+                <h3>Adya Shakti</h3>
+                <p>The primordial feminine energy that activates creation. Known as Parvati, Durga, or Kali in different manifestations.</p>
+            </div>
+            <div id="cosmic-energy-container1"></div>
+        </div>
+        
+        <!-- Scene 3: Galaxy Creation -->
+        <div class="scene" id="scene3">
+            <div class="cosmic-figure" id="sadashiva-creation">Sadashiva</div>
+            <div class="cosmic-figure" id="adya-creation">Adya Shakti</div>
+            <div class="cosmic-figure galaxy" id="galaxy1">New Galaxy</div>
+            <div class="text-panel">
+                <h2>Manifestation of Galaxies</h2>
+                <p>Adya Shakti weaves cosmic matter into galaxies using the infinite potential of Sadashiva. Each galaxy contains its own laws of space and time.</p>
+            </div>
+            <div class="info-card" style="top: 15%; left: 15%;" id="card4">
+                <h3>Cosmic Vibrations</h3>
+                <p>The sound "Aum" is believed to be the primordial vibration from which all galaxies emerge. Each galaxy has its own cosmic sound.</p>
+            </div>
+            <div class="info-card" style="bottom: 25%; right: 20%;" id="card5">
+                <h3>14 Lokas</h3>
+                <p>Each galaxy contains 14 dimensions of existence (lokas), from the physical plane to the highest spiritual realms.</p>
+            </div>
+            <div id="cosmic-energy-container2"></div>
+        </div>
+        
+        <!-- Scene 4: Trinity in Each Galaxy -->
+        <div class="scene" id="scene4">
+            <div class="cosmic-figure galaxy" id="galaxy2">
+                Divine Realm
+                <div class="trinity" id="brahma">Brahma</div>
+                <div class="trinity" id="vishnu">Vishnu</div>
+                <div class="trinity" id="mahesh">Mahesh</div>
+            </div>
+            <div class="text-panel">
+                <h2>The Cosmic Trinity</h2>
+                <p>Within each galaxy resides its own divine trinity: Brahma the creator, Vishnu the preserver, and Mahesh (Shiva) the destroyer.</p>
+            </div>
+            <div class="info-card" style="top: 20%; right: 10%;" id="card6">
+                <h3>Brahma</h3>
+                <p>The architect of worlds who creates from cosmic matter. Often depicted with four heads representing the four Vedas.</p>
+            </div>
+            <div class="info-card" style="bottom: 20%; left: 10%;" id="card7">
+                <h3>Vishnu</h3>
+                <p>The maintainer who incarnates in various forms (avatars) to preserve cosmic order. His abode is Vaikuntha.</p>
+            </div>
+            <div class="info-card" style="top: 60%; right: 20%;" id="card8">
+                <h3>Mahesh (Shiva)</h3>
+                <p>The destroyer who dissolves forms to make way for new creation. Represents the transformative power of time.</p>
+            </div>
+            <div id="stars-container2"></div>
+        </div>
+        
+        <!-- Scene 5: Multiple Galaxies -->
+        <div class="scene" id="scene5">
+            <div class="cosmic-figure galaxy" id="galaxy3">Andromeda</div>
+            <div class="cosmic-figure galaxy" id="galaxy4">Milky Way</div>
+            <div class="cosmic-figure galaxy" id="galaxy5">Sombrero</div>
+            <div class="cosmic-figure galaxy" id="galaxy6">Whirlpool</div>
+            <div class="text-panel">
+                <h2>The Cosmic Ocean</h2>
+                <p>Countless galaxies float in the infinite expanse, each with its own trinity governing cycles of creation and destruction.</p>
+            </div>
+            <div class="info-card" style="top: 10%; left: 10%;" id="card9">
+                <h3>Brahmanda</h3>
+                <p>Each galaxy is called a Brahmanda ("Brahma's egg"), a self-contained universe with its own creator deity.</p>
+            </div>
+            <div class="info-card" style="bottom: 15%; right: 10%;" id="card10">
+                <h3>Multiverse</h3>
+                <p>Ancient texts describe countless universes like bubbles in foam, each with different physical laws.</p>
+            </div>
+            <div id="stars-container3"></div>
+        </div>
+        
+        <!-- Scene 6: Destruction -->
+        <div class="scene" id="scene6">
+            <div class="cosmic-figure" id="sadashiva-destruction">Sadashiva</div>
+            <div class="cosmic-figure" id="adya-destruction">Adya Shakti</div>
+            <div id="ashes-container"></div>
+            <div class="text-panel">
+                <h2>The Cosmic Dissolution</h2>
+                <p>When the time comes, Adya Shakti draws galaxies back into herself. The ashes of dissolved universes adorn Sadashiva as sacred vibhuti.</p>
+            </div>
+            <div class="info-card" style="top: 30%; right: 15%;" id="card11">
+                <h3>Pralaya</h3>
+                <p>The great dissolution when all manifest existence returns to its unformed state. There are four types of pralaya in cosmic cycles.</p>
+            </div>
+            <div class="info-card" style="bottom: 30%; left: 15%;" id="card12">
+                <h3>Vibhuti</h3>
+                <p>The sacred ashes represent the impermanence of all forms. They symbolize that all creation ultimately returns to Shiva.</p>
+            </div>
+            <div id="cosmic-energy-container3"></div>
+        </div>
+        
+        <!-- Scene 7: Kalpa Cycle -->
+        <div class="scene" id="scene7">
+            <div class="cosmic-figure" id="sadashiva-cycle">Sadashiva</div>
+            <div class="cosmic-figure" id="adya-cycle">Adya Shakti</div>
+            <div class="text-panel">
+                <h1>The Eternal Kalpa</h1>
+                <p>As one galaxy dissolves, another is born. The cosmic dance continues eternally, with Sadashiva and Adya Shakti forever entwined in divine play.</p>
+            </div>
+            <div class="info-card" style="top: 20%; left: 10%;" id="card13">
+                <h3>Maha-Kalpa</h3>
+                <p>The great cycle encompassing 100 years of Brahma's life, after which even the creator dissolves into the absolute.</p>
+            </div>
+            <div class="info-card" style="bottom: 20%; right: 10%;" id="card14">
+                <h3>Lila: Divine Play</h3>
+                <p>The entire cosmic cycle is seen as Shiva's playful dance, where creation and destruction are but movements in the eternal rhythm.</p>
+            </div>
+            <div id="stars-container4"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create stars for background
+            function createStars(containerId, count) {
+                const container = document.getElementById(containerId);
+                for (let i = 0; i < count; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.width = `${Math.random() * 4 + 1}px`;
+                    star.style.height = star.style.width;
+                    star.style.opacity = Math.random() * 0.8 + 0.2;
+                    star.style.animationDelay = `${Math.random() * 5}s`;
+                    container.appendChild(star);
+                    
+                    // Twinkle animation
+                    gsap.to(star, {
+                        opacity: Math.random() * 0.5,
+                        duration: Math.random() * 3 + 1,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                }
+            }
+            
+            // Create cosmic energy particles
+            function createCosmicEnergy(containerId, count, color) {
+                const container = document.getElementById(containerId);
+                for (let i = 0; i < count; i++) {
+                    const energy = document.createElement('div');
+                    energy.className = 'cosmic-energy';
+                    energy.style.left = `${Math.random() * 100}%`;
+                    energy.style.top = `${Math.random() * 100}%`;
+                    energy.style.backgroundColor = color || `hsl(${Math.random() * 60 + 180}, 100%, 70%)`;
+                    energy.style.width = `${Math.random() * 10 + 5}px`;
+                    energy.style.height = energy.style.width;
+                    container.appendChild(energy);
+                    
+                    // Animate energy particles
+                    gsap.to(energy, {
+                        x: `${Math.random() * 200 - 100}px`,
+                        y: `${Math.random() * 200 - 100}px`,
+                        opacity: Math.random() * 0.7 + 0.3,
+                        duration: Math.random() * 15 + 5,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "power1.inOut"
+                    });
+                }
+            }
+            
+            // Create ashes
+            function createAshes(count) {
+                const container = document.getElementById('ashes-container');
+                for (let i = 0; i < count; i++) {
+                    const ash = document.createElement('div');
+                    ash.className = 'ashes';
+                    ash.style.left = `${Math.random() * 100}%`;
+                    ash.style.top = `${Math.random() * 100}%`;
+                    ash.style.width = `${Math.random() * 8 + 3}px`;
+                    ash.style.height = ash.style.width;
+                    container.appendChild(ash);
+                    
+                    // Random movement
+                    gsap.to(ash, {
+                        x: `${Math.random() * 300 - 150}px`,
+                        y: `${Math.random() * 300 - 150}px`,
+                        opacity: Math.random() * 0.7 + 0.3,
+                        duration: Math.random() * 15 + 5,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                }
+            }
+            
+            // Initialize elements
+            createStars('stars-container1', 150);
+            createStars('stars-container2', 100);
+            createStars('stars-container3', 150);
+            createStars('stars-container4', 200);
+            createCosmicEnergy('cosmic-energy-container1', 40, 'rgba(106, 13, 173, 0.7)');
+            createCosmicEnergy('cosmic-energy-container2', 50, 'rgba(255, 107, 107, 0.7)');
+            createCosmicEnergy('cosmic-energy-container3', 60, 'rgba(198, 40, 40, 0.7)');
+            createAshes(100);
+            
+            // Set up ScrollTrigger
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Progress bar animation
+            gsap.to('.progress-bar', {
+                scrollTrigger: {
+                    scrub: 0.5
+                },
+                width: '100%'
+            });
+            
+            // Timeline markers interaction
+            const markers = document.querySelectorAll('.timeline-marker');
+            markers.forEach(marker => {
+                marker.addEventListener('click', function() {
+                    const sceneId = this.getAttribute('data-scene');
+                    const scene = document.getElementById(sceneId);
+                    const sceneTop = scene.offsetTop;
+                    window.scrollTo({
+                        top: sceneTop,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Scene activation
+            const scenes = gsap.utils.toArray('.scene');
+            scenes.forEach((scene, i) => {
+                ScrollTrigger.create({
+                    trigger: '.scroll-container',
+                    start: () => `${i * (100 / scenes.length)}%`,
+                    end: () => `${(i + 1) * (100 / scenes.length)}%`,
+                    onEnter: () => {
+                        scene.classList.add('active');
+                        markers[i].classList.add('active');
+                    },
+                    onEnterBack: () => {
+                        scene.classList.add('active');
+                        markers[i].classList.add('active');
+                    },
+                    onLeave: () => {
+                        scene.classList.remove('active');
+                        markers[i].classList.remove('active');
+                    },
+                    onLeaveBack: () => {
+                        scene.classList.remove('active');
+                        markers[i].classList.remove('active');
+                    }
+                });
+            });
+            
+            // Info cards animation
+            const cards = gsap.utils.toArray('.info-card');
+            cards.forEach((card, i) => {
+                gsap.to(card, {
+                    scrollTrigger: {
+                        trigger: card.parentElement,
+                        start: "top center",
+                        end: "bottom center",
+                        onEnter: () => card.classList.add('active'),
+                        onEnterBack: () => card.classList.add('active'),
+                        onLeave: () => card.classList.remove('active'),
+                        onLeaveBack: () => card.classList.remove('active')
+                    }
+                });
+            });
+            
+            // Scene 2: Sadashiva and Adya animation
+            gsap.to('#sadashiva', {
+                scrollTrigger: {
+                    trigger: '#scene2',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                x: -180,
+                y: -60,
+                scale: 1.2,
+                rotation: 10
+            });
+            
+            gsap.to('#adya', {
+                scrollTrigger: {
+                    trigger: '#scene2',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                x: 180,
+                y: 60,
+                scale: 1.2,
+                rotation: -10
+            });
+            
+            // Scene 3: Galaxy creation animation
+            gsap.fromTo('#galaxy1', 
+                { scale: 0, opacity: 0 },
+                {
+                    scrollTrigger: {
+                        trigger: '#scene3',
+                        scrub: 0.5,
+                        start: 'top center',
+                        end: 'bottom center'
+                    },
+                    scale: 1,
+                    opacity: 1,
+                    y: -120,
+                    x: 60,
+                    rotation: 360
+                }
+            );
+            
+            // Energy flow between Sadashiva and Adya to galaxy
+            gsap.to('#cosmic-energy-container2 .cosmic-energy', {
+                scrollTrigger: {
+                    trigger: '#scene3',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                x: (i) => Math.sin(i) * 100 - 200,
+                y: (i) => Math.cos(i) * 100 - 100,
+                opacity: 0.9
+            });
+            
+            // Scene 4: Trinity animation
+            gsap.to('#brahma', {
+                scrollTrigger: {
+                    trigger: '#scene4',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                x: -60,
+                y: -60,
+                scale: 1.3
+            });
+            
+            gsap.to('#vishnu', {
+                scrollTrigger: {
+                    trigger: '#scene4',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                x: 60,
+                y: -60,
+                scale: 1.3
+            });
+            
+            gsap.to('#mahesh', {
+                scrollTrigger: {
+                    trigger: '#scene4',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                y: 60,
+                scale: 1.3
+            });
+            
+            // Scene 5: Multiple galaxies animation
+            ['#galaxy3', '#galaxy4', '#galaxy5', '#galaxy6'].forEach((galaxy, i) => {
+                gsap.to(galaxy, {
+                    scrollTrigger: {
+                        trigger: '#scene5',
+                        scrub: 0.5,
+                        start: 'top center',
+                        end: 'bottom center'
+                    },
+                    x: i % 2 === 0 ? -150 + (i * 70) : 150 - ((i-1) * 70),
+                    y: i % 2 === 0 ? -80 + (i * 40) : 80 - ((i-1) * 40),
+                    rotation: i % 2 === 0 ? 30 : -30
+                });
+            });
+            
+            // Scene 6: Destruction animation
+            gsap.to('#sadashiva-destruction', {
+                scrollTrigger: {
+                    trigger: '#scene6',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                scale: 1.4,
+                filter: 'brightness(1.6) drop-shadow(0 0 20px var(--sadashiva-color))'
+            });
+            
+            gsap.to('#adya-destruction', {
+                scrollTrigger: {
+                    trigger: '#scene6',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                x: 120,
+                scale: 1.3,
+                filter: 'brightness(1.4) drop-shadow(0 0 20px var(--adya-color))'
+            });
+            
+            gsap.to('#ashes-container .ashes', {
+                scrollTrigger: {
+                    trigger: '#scene6',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                opacity: 0.9,
+                stagger: 0.02
+            });
+            
+            // Scene 7: Cycle animation
+            gsap.to(['#sadashiva-cycle', '#adya-cycle'], {
+                scrollTrigger: {
+                    trigger: '#scene7',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                x: 0,
+                y: 0,
+                scale: 1,
+                filter: 'brightness(1)'
+            });
+            
+            // Cosmic energy flow in final scene
+            gsap.to('#cosmic-energy-container3 .cosmic-energy', {
+                scrollTrigger: {
+                    trigger: '#scene7',
+                    scrub: 0.5,
+                    start: 'top center',
+                    end: 'bottom center'
+                },
+                x: (i) => Math.sin(i) * 200,
+                y: (i) => Math.cos(i) * 200,
+                opacity: 0.7
+            });
+        });
+    </script>
+</body>
+</html>
